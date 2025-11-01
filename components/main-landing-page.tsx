@@ -72,7 +72,7 @@ export default function MainLandingPage({ onStudentClick, onTeacherClick }: Main
         </div>
 
         {/* Footer Info */}
-        <div className="mt-12 text-center p-6 bg-white rounded-lg border border-gray-200">
+        {/* <div className="mt-12 text-center p-6 bg-white rounded-lg border border-gray-200">
           <p className="text-gray-600 text-sm mb-3">
             For the first time, use the demo credentials to access the teacher panel:
           </p>
@@ -84,7 +84,7 @@ export default function MainLandingPage({ onStudentClick, onTeacherClick }: Main
               <strong>Password:</strong> demo123
             </p>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   )

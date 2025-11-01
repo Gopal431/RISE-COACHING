@@ -13,16 +13,38 @@ export default function MainLandingPage({ onStudentClick, onTeacherClick }: Main
     <div className="min-h-screen flex items-center justify-center px-4 py-8">
       <div className="w-full max-w-2xl">
         {/* Header */}
-        <div className="text-center mb-12">
-          <div className="inline-flex items-center justify-center gap-3 mb-6">
-            <div className="w-16 h-16 bg-gradient-to-br from-orange-600 to-blue-600 rounded-full flex items-center justify-center shadow-lg">
-              <span className="text-white font-bold text-2xl">📚</span>
-            </div>
-          </div>
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-3">RISE  COACHING</h1>
-          <p className="text-xl text-gray-600">Online Examination Platform</p>
-          <p className="text-sm text-gray-500 mt-2">STRIVE FOR EXCELLENCE</p>
-        </div>
+     <div className="text-center mb-12">
+  <div className="inline-flex items-center justify-center gap-3 mb-6">
+    <div className="w-20 h-20 bg-gradient-to-br from-orange-500 to-blue-600 rounded-full flex items-center justify-center shadow-lg shadow-blue-200">
+      <span className="text-white text-3xl">📚</span>
+    </div>
+  </div>
+
+  <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 tracking-wide mb-3">
+    RISE <span className="text-orange-600">COACHING</span>
+  </h1>
+
+  <p className="text-xl text-gray-700 font-medium">
+    Online Examination Platform
+  </p>
+
+  <p className="text-sm text-gray-500 mt-1 italic">
+    “Strive for Excellence”
+  </p>
+
+  <p className="text-base text-gray-600 mt-3">
+    Developed by{" "}
+    <a
+      href="https://gopal-prasad-portfolio-88qu25gr4.vercel.app/"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="font-semibold text-blue-600 hover:underline hover:text-blue-800 transition-colors"
+    >
+      Gopal Prasad
+    </a>
+  </p>
+</div>
+
 
         {/* Choice Cards */}
         <div className="grid md:grid-cols-2 gap-6">

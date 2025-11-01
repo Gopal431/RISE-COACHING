@@ -89,7 +89,7 @@ export default function ResultsPage({ results, onRetry }: ResultsPageProps) {
               </Card>
             </div>
 
-            <div className="mb-8">
+            {/* <div className="mb-8">
               <h3 className="text-xl font-bold text-gray-900 mb-4">Answer Review</h3>
               <div className="space-y-4 max-h-96 overflow-y-auto">
                 {questions.map((question, index) => {
@@ -127,7 +127,7 @@ export default function ResultsPage({ results, onRetry }: ResultsPageProps) {
                   )
                 })}
               </div>
-            </div>
+            </div> */}
 
             <div className="flex gap-3 justify-center flex-col md:flex-row">
               <Button

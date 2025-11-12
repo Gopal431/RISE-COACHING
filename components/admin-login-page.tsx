@@ -50,7 +50,7 @@ export default function AdminLoginPage({ onLogin, onBack }: AdminLoginPageProps)
               <span className="text-blue-600 font-bold text-lg">👨‍🏫</span>
             </div>
             <div>
-              <CardTitle className="text-white">RISE  COACHING</CardTitle>
+              <CardTitle className="text-white">Competitive Arena</CardTitle>
               <CardDescription className="text-blue-100">Teacher Admin Login</CardDescription>
             </div>
           </div>
@@ -102,13 +102,13 @@ export default function AdminLoginPage({ onLogin, onBack }: AdminLoginPageProps)
             </Button>
           </form>
 
-          {/* <div className="mt-4 p-3 bg-blue-50 rounded-lg border border-blue-200">
+          <div className="mt-4 p-3 bg-blue-50 rounded-lg border border-blue-200">
             <p className="text-xs text-gray-600 mb-2">
               <strong>Demo Credentials:</strong>
             </p>
             <p className="text-xs text-gray-600">Email: demo@example.com</p>
             <p className="text-xs text-gray-600">Password: demo123</p>
-          </div> */}
+          </div>
         </CardContent>
       </Card>
     </div>

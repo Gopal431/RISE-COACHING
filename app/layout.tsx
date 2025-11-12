@@ -8,8 +8,8 @@ const _geist = Geist({ subsets: ["latin"] })
 const _geistMono = Geist_Mono({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "RISE  COACHING - Online Exam Platform",
-  description: "Computer Based Test Platform by RISE  COACHING",
+  title: "Competitive Arena - Online Exam Platform",
+  description: "Computer Based Test Platform byRISE COACHING",
   generator: "v0.app",
   viewport: "width=device-width, initial-scale=1",
 }

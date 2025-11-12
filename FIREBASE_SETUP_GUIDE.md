@@ -1,10 +1,10 @@
-# Firebase Setup Guide for RISE  COACHING Exam Platform
+# Firebase Setup Guide forRISE COACHING Exam Platform
 
 ## Step 1: Create a Firebase Project
 
 1. Go to [Firebase Console](https://console.firebase.google.com/)
 2. Click "Add project"
-3. Enter project name: "RISE  COACHING Exam"
+3. Enter project name: "Competitive Arena Exam"
 4. Click "Continue"
 5. Enable Google Analytics (optional) and click "Create project"
 6. Wait for project creation to complete

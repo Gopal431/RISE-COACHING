@@ -195,6 +195,82 @@ export const getStudentExamHistory = async (studentId: string) => {
   return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
 }
 
+// Student Signup and Approval
+export const registerStudentWithSignup = async (
+  fullName: string,
+  phoneNumber: string,
+  email: string,
+  examPreparation: string[],
+) => {
+  const pendingRef = collection(db, "pendingStudents")
+  const docRef = await addDoc(pendingRef, {
+    fullName,
+    phoneNumber,
+    email,
+    examPreparation,
+    status: "pending",
+    createdAt: new Date().toISOString(),
+    verified: true, // Skip OTP verification - send directly to admin
+  })
+  return docRef.id
+}
+
+export const verifyStudentOTP = async (studentId: string, otp: string) => {
+  // This function is no longer needed as OTP verification is removed
+}
+
+export const getPendingStudents = async () => {
+  const pendingRef = collection(db, "pendingStudents")
+  const snapshot = await getDocs(pendingRef)
+  return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })) as any[]
+}
+
+export const approveStudent = async (studentId: string, password: string) => {
+  const studentDoc = await getDoc(doc(db, "pendingStudents", studentId))
+  const studentData = studentDoc.data()
+
+  if (!studentData?.verified) {
+    throw new Error("Student not verified")
+  }
+
+  // Create Firebase Auth account
+  const userCredential = await createUserWithEmailAndPassword(auth, studentData.email, password)
+  const user = userCredential.user
+
+  // Create student profile
+  await setDoc(doc(db, "students", user.uid), {
+    uid: user.uid,
+    fullName: studentData.fullName,
+    phoneNumber: studentData.phoneNumber,
+    email: studentData.email,
+    examPreparation: studentData.examPreparation,
+    createdAt: new Date().toISOString(),
+    profileImage: null,
+    address: "",
+  })
+
+  // Delete from pending
+  await deleteDoc(doc(db, "pendingStudents", studentId))
+
+  return user
+}
+
+export const rejectStudent = async (studentId: string) => {
+  await deleteDoc(doc(db, "pendingStudents", studentId))
+}
+
+export const getStudentProfile = async (studentId: string) => {
+  const studentRef = doc(db, "students", studentId)
+  const snapshot = await getDoc(studentRef)
+  if (!snapshot.exists()) return null
+  return snapshot.data()
+}
+
+export const updateStudentProfile = async (studentId: string, updates: { address?: string; profileImage?: string }) => {
+  const studentRef = doc(db, "students", studentId)
+  await updateDoc(studentRef, updates)
+}
+
 export const checkFirebaseAuthConfigured = () => {
   return auth !== null && auth !== undefined
 }

@@ -6,7 +6,9 @@ import AdminLoginPage from "@/components/admin-login-page"
 import AdminDashboard from "@/components/admin-dashboard"
 import MainLandingPage from "@/components/main-landing-page"
 import StudentLandingPage from "@/components/student-landing-page"
+import StudentSignupPage from "@/components/student-signup-page"
 import StudentExamPage from "@/components/student-exam-page"
+import StudentHome from "@/components/student-home"
 import ResultsPage from "@/components/results-page"
 import FirebaseSetupRequired from "@/components/firebase-setup-required"
 
@@ -16,25 +18,15 @@ type AdminSession = {
   uid: string
 }
 
-type StudentSession = {
-  name: string
-  rollNo: string
-  examCode: string
-  examId: string
-  teacherId: string
-}
-
 type ExamState = "complete" | "taking"
 
 export default function Home() {
   const [userType, setUserType] = useState<"admin" | "student" | "none">("none")
   const [adminSession, setAdminSession] = useState<AdminSession | null>(null)
-  const [studentSession, setStudentSession] = useState<StudentSession | null>(null)
+  const [studentSession, setStudentSession] = useState<any>(null)
   const [examState, setExamState] = useState<ExamState | null>(null)
   const [studentResults, setStudentResults] = useState<any>(null)
-  const [currentScreen, setCurrentScreen] = useState<"main" | "admin-login" | "student-landing" | "exam" | "results">(
-    "main",
-  )
+  const [currentScreen, setCurrentScreen] = useState<string>("main")
   const [loading, setLoading] = useState(true)
   const [firebaseConfigured, setFirebaseConfigured] = useState(true)
 
@@ -69,15 +61,24 @@ export default function Home() {
     setCurrentScreen("main")
   }
 
-  const handleStudentExamAccess = (
-    name: string,
-    rollNo: string,
-    examCode: string,
-    examId: string,
-    teacherId: string,
-  ) => {
-    setStudentSession({ name, rollNo, examCode, examId, teacherId })
+  const handleStudentSignupSuccess = () => {
+    alert("Your profile has been submitted for admin approval. Please wait for approval before login.")
+    setCurrentScreen("student-landing")
+  }
+
+  const handleStudentLogin = (studentId: string, studentEmail: string) => {
+    setStudentSession({ id: studentId, email: studentEmail })
     setUserType("student")
+    setCurrentScreen("student-home")
+  }
+
+  const handleStudentExamAccess = (examCode: string, examId: string, teacherId: string) => {
+    setStudentSession((prev: any) => ({
+      ...prev,
+      examCode,
+      examId,
+      teacherId,
+    }))
     setExamState("taking")
     setCurrentScreen("exam")
   }
@@ -121,7 +122,16 @@ export default function Home() {
       )}
 
       {currentScreen === "student-landing" && (
-        <StudentLandingPage onStudentAccess={handleStudentExamAccess} onBack={() => setCurrentScreen("main")} />
+        <StudentLandingPage
+          onStudentSignup={() => setCurrentScreen("student-signup")}
+          onStudentLogin={handleStudentLogin}
+          onBack={() => setCurrentScreen("main")}
+          onAdminClick={() => setCurrentScreen("admin-login")}
+        />
+      )}
+
+      {currentScreen === "student-signup" && (
+        <StudentSignupPage onSignupSuccess={handleStudentSignupSuccess} onBack={() => setCurrentScreen("main")} />
       )}
 
       {currentScreen === "admin-login" && (
@@ -132,11 +142,21 @@ export default function Home() {
         <AdminDashboard session={adminSession} onLogout={handleAdminLogout} />
       )}
 
-      {currentScreen === "exam" && userType === "student" && studentSession && (
+      {currentScreen === "student-home" && studentSession && (
+        <StudentHome
+          studentId={studentSession.id}
+          studentEmail={studentSession.email}
+          onLogout={handleStudentReset}
+          onTakeExam={() => setCurrentScreen("exam-access")}
+          onShowAdminLogin={() => setCurrentScreen("admin-login")}
+        />
+      )}
+
+      {currentScreen === "exam" && studentSession && (
         <StudentExamPage student={studentSession} onSubmit={handleExamSubmit} onLogout={handleStudentReset} />
       )}
 
-      {currentScreen === "results" && userType === "student" && studentResults && (
+      {currentScreen === "results" && studentResults && (
         <ResultsPage results={studentResults} onRetry={handleStudentReset} />
       )}
     </main>
